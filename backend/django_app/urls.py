@@ -3,7 +3,6 @@
 from django.contrib import admin
 from django.urls import path
 from django.http import JsonResponse
-
 def hello_name(request):
     """
     A simple view that returns 'Hello, {name}' in JSON format.
