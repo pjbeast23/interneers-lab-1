@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.http import JsonResponse
-from store-with sqlite.views import ProductViewSet
+from storesqlite.views import ProductViewSet
 def hello_name(request):
     """
     A simple view that returns 'Hello, {name}' in JSON format.
