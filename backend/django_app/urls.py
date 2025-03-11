@@ -5,6 +5,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.http import JsonResponse
 from storesqlite.views import ProductViewSet
+from storeinmemory.views import create_product, get_product, get_products, update_product, delete_product
 def hello_name(request):
     """
     A simple view that returns 'Hello, {name}' in JSON format.
@@ -21,4 +22,10 @@ urlpatterns = [
     path('', include(router.urls)),
     # Example usage: /hello/?name=Bob
     # returns {"message": "Hello, Bob!"}
+     path("productnew/", get_products, name="get_products"),
+    path("productnew/create/", create_product, name="create_product"),
+    path("productnew/<int:product_id>/", get_product, name="get_product"),
+    path("productnew/<int:product_id>/update/", update_product, name="update_product"),
+    path("productnew/<int:product_id>/delete/", delete_product, name="delete_product"),
 ]
+
