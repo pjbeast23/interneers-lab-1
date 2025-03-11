@@ -4,13 +4,27 @@ import json
 from .models import Product
 from .database import products
 
+def validate_product_data(data):
+    required_fields = ["name", "category", "price", "brand", "quantity"]
+    if not all(field in data for field in required_fields):
+        return "Missing required fields"
+    if not isinstance(data["price"], (int, float)) or data["price"] <= 0:
+        return "Price must be a positive number"
+    if not isinstance(data["quantity"], int) or data["quantity"] < 0:
+        return "Quantity must be a non-negative integer"
+    return None
+
 @csrf_exempt
 def create_product(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        required_fields = ["name", "category", "price", "brand", "quantity"]
-        if not all(field in data for field in required_fields):
-            return JsonResponse({"error": "Missing required fields"}, status=400)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        
+        error = validate_product_data(data)
+        if error:
+            return JsonResponse({"error": error}, status=400)
         
         product = Product(
             data["name"], data.get("description", ""), data["category"],
@@ -32,11 +46,19 @@ def get_products(request):
 @csrf_exempt
 def update_product(request, product_id):
     if request.method == "PUT":
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        
         product = next((p for p in products if p.id == product_id), None)
         if not product:
             return JsonResponse({"error": "Product not found"}, status=404)
         
-        data = json.loads(request.body)
+        error = validate_product_data(data)
+        if error:
+            return JsonResponse({"error": error}, status=400)
+        
         product.name = data.get("name", product.name)
         product.description = data.get("description", product.description)
         product.category = data.get("category", product.category)
