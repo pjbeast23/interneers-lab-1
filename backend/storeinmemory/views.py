@@ -41,7 +41,18 @@ def get_product(request, product_id):
     return JsonResponse(product.__dict__)
 
 def get_products(request):
-    return JsonResponse([p.__dict__ for p in products], safe=False)
+    page = int(request.GET.get("page", 1))
+    page_size = int(request.GET.get("page_size", 5))
+    start = (page - 1) * page_size
+    end = start + page_size
+    paginated_products = products[start:end]
+    
+    return JsonResponse({
+        "total": len(products),
+        "page": page,
+        "page_size": page_size,
+        "products": [p.__dict__ for p in paginated_products]
+    }, safe=False)
 
 @csrf_exempt
 def update_product(request, product_id):
