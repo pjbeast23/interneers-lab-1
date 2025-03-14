@@ -10,3 +10,4 @@ class Product:
         self.price = price
         self.brand = brand
         self.quantity = quantity
+

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "storesqlite",
     "storeinmemory",
+    "week3",
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+from mongoengine import connect
+connect(db='productnew_db', host='mongodb://localhost:27017')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
