@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "storesqlite",
     "storeinmemory",
     "week3",
+    "week4",
 ]
 
 MIDDLEWARE = [

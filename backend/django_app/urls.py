@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from storesqlite.views import ProductViewSet
 from week3.views import ProductListView, ProductDetailView
 from storeinmemory.views import create_product, get_product, get_products, update_product, delete_product
+from week4.views import ProductCategoryListView, ProductCategoryDetailView, ProductListView, ProductDetailView, ProductsByCategoryView
 def hello_name(request):
     """
     A simple view that returns 'Hello, {name}' in JSON format.
@@ -34,6 +35,13 @@ urlpatterns = [
     ## asview() is used to convert the function based views to class based views
       path('productsnew/', ProductListView.as_view(), name='product-list'),
     path('productsnew/<str:pk>/', ProductDetailView.as_view(), name='product-detail'),
+    ## week 4
+    path('categoriesweek4/', ProductCategoryListView.as_view(), name='category-list'),
+    path('categoriesweek4/<str:category_id>/', ProductCategoryDetailView.as_view(), name='category-detail'),
+    # Product URLs
+    path('productsnewweek4/', ProductListView.as_view(), name='product-list'),
+    path('productsnewweek4/<str:product_id>/', ProductDetailView.as_view(), name='product-detail'),
+    path('productsnewweek4/category/<str:category_id>/', ProductsByCategoryView.as_view(), name='products-by-category'),
 ]
 #Client → URLs → View → Serializer → Service → Repository → Model → MongoDB
 #   ←      ←     ←    Serializer ← Service ← Repository ← Model ← MongoDB
