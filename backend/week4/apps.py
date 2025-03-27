@@ -10,7 +10,7 @@ class Week4Config(AppConfig):
         if settings.DEBUG:
             try:
                 existing_categories = ProductCategoryService.get_all_categories()
-                if existing_categories.count() == 0:  
+                if existing_categories.count() <3:  
                     from week4.seed import seed_data
                     seed_data()
                 else:
