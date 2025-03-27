@@ -26,7 +26,7 @@ class Product(Document):
     price = FloatField(required=True, min_value=0.0)
     description = StringField(max_length=500)
     stock = IntField(required=True, min_value=0)
-    category = ReferenceField(ProductCategory, required=True)
+    category = ReferenceField(ProductCategory, required=True,ondelete='CASCADE')
     created_at = DateTimeField(default=lambda: datetime.now(timezone.utc))
     updated_at = DateTimeField(default=lambda: datetime.now(timezone.utc))
 
