@@ -68,6 +68,20 @@ class ProductCategoryRepository:
             raise ValueError(f"Category with ID '{category_id}' does not exist")
         except Exception as e:
             raise ValueError(f"Error counting products in category: {str(e)}")
+    @staticmethod
+    def get_or_create_default():
+        try:
+            default_title = "Miscellaneous"
+            category = ProductCategory.objects.filter(title=default_title).first()
+            if not category:
+                category = ProductCategory(
+                    title=default_title,
+                    description="Default category for uncategorized products"
+                )
+                category.save()
+            return category
+        except Exception as e:
+            raise ValueError(f"Error getting or creating default category: {str(e)}")
 
 class ProductRepository:
     @staticmethod
@@ -100,6 +114,13 @@ class ProductRepository:
             return Product.objects.all()
         except Exception as e:
             raise ValueError(f"Error retrieving products: {str(e)}")
+        
+    @staticmethod
+    def get_unmigrated():
+        try:
+            return Product.objects(category=None)
+        except Exception as e:
+            raise ValueError(f"Error retrieving unmigrated products: {str(e)}")
 
     @staticmethod
     def update(product_id, data):

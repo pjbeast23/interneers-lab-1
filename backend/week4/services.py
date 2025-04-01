@@ -24,6 +24,9 @@ class ProductCategoryService:
         if product_count > 0:
             raise ValueError("Cannot delete category with associated products")
         ProductCategoryRepository.delete(category_id)
+    @staticmethod
+    def get_or_create_default_category():
+        return ProductCategoryRepository.get_or_create_default()
 
 class ProductService:
     @staticmethod
@@ -41,6 +44,10 @@ class ProductService:
     @staticmethod
     def get_all_products():
         return ProductRepository.get_all()
+    
+    @staticmethod
+    def get_unmigrated_products():
+        return ProductRepository.get_unmigrated()
 
     @staticmethod
     def update_product(product_id, data):
