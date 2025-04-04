@@ -8,6 +8,7 @@ from storesqlite.views import ProductViewSet
 from week3.views import ProductListView, ProductDetailView
 from storeinmemory.views import create_product, get_product, get_products, update_product, delete_product
 from week4.views import ProductCategoryListView, ProductCategoryDetailView, ProductListView, ProductDetailView, ProductsByCategoryView
+from week4.views import product_display_view
 def hello_name(request):
     """
     A simple view that returns 'Hello, {name}' in JSON format.
@@ -42,6 +43,7 @@ urlpatterns = [
     path('productsnewweek4/', ProductListView.as_view(), name='product-list'),
     path('productsnewweek4/<str:product_id>/', ProductDetailView.as_view(), name='product-detail'),
     path('productsnewweek4/category/<str:category_id>/', ProductsByCategoryView.as_view(), name='products-by-category'),
+    path('product_display/', product_display_view, name='product_display'),
 ]
 #Client → URLs → View → Serializer → Service → Repository → Model → MongoDB
 #   ←      ←     ←    Serializer ← Service ← Repository ← Model ← MongoDB

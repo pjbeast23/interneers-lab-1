@@ -5,6 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from week4.serializers import ProductSerializer, ProductCategorySerializer
 from week4.services import ProductService, ProductCategoryService
+from django.shortcuts import render
+
+def product_display_view(request):
+    return render(request, 'product_display.html')
 
 # ProductCategory Views
 @method_decorator(csrf_exempt, name='dispatch')
