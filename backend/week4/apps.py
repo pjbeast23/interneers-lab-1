@@ -1,12 +1,17 @@
 from django.apps import AppConfig
 from django.conf import settings
 from week4.services import ProductCategoryService, ProductService
-
+import sys
 class Week4Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'week4'
 
+
     def ready(self):
+        if settings.TESTING:
+            print("Skipping migration and seeding logic during tests.")
+            return
+        
         if settings.DEBUG:
             try:
                 unmigrated_products = ProductService.get_unmigrated_products()

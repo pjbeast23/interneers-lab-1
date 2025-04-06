@@ -125,6 +125,7 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 import os
+import sys
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from mongoengine import connect
 MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
@@ -132,13 +133,15 @@ MONGODB_PORT = int(os.environ.get('MONGODB_PORT', 27018))
 MONGODB_DB = os.environ.get('MONGODB_DB', 'productnew_db1')
 MONGODB_USERNAME = os.environ.get('MONGODB_USERNAME', 'root')
 MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD', 'example')
-
+if 'test' in sys.argv:
+    MONGODB_DB = 'test_' + MONGODB_DB
 connect(
     db=MONGODB_DB,
     host=f'mongodb://{MONGODB_USERNAME}:{MONGODB_PASSWORD}@{MONGODB_HOST}:{MONGODB_PORT}/',
     username=MONGODB_USERNAME,
     password=MONGODB_PASSWORD
 )
+     
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -152,3 +155,4 @@ REST_FRAMEWORK = {
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
+TESTING = 'test' in sys.argv
