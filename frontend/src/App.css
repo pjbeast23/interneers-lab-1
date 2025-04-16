@@ -9,3 +9,16 @@ h1 {
   padding: 20px;
   background-color: #f0f0f0;
 }
+
+main {
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+    padding: 15px;
+  }
+}
